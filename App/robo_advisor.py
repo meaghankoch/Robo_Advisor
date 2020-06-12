@@ -1,13 +1,43 @@
-
 from dotenv import load_dotenv
 import os
 
 load_dotenv() #> loads contents of the .env file into the script's environment
 
-MY_API_Key = os.getenv("MY_API_Key")
-print(MY_API_Key)
+ALPHAVANTAGE_API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
+print(ALPHAVANTAGE_API_KEY)
 
 
+import requests
+import json
+
+
+request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=demo"
+response = requests.get(request_url)
+#print(type(response)) --> requests.models.Response'
+#print(response.status_code) #--> 200
+#print(response.text)
+
+#changing data to dict from str
+parsed_response = json.loads(response.text)
+#print(type(parsed_response))
+print(parsed_response)
+
+
+
+
+quit()
+
+#Info inputs
+
+
+
+
+
+
+#
+#
+#
+#
 
 
 
