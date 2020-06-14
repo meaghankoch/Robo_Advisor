@@ -60,26 +60,28 @@ latest_day = dates[0]
 
 latest_close = tsd[latest_day]["4. close"]
 
-(exit)
+#maximum of all high prices
+#recent_high = max(high_prices) 
 
+high_prices = []
 
+for date in dates: 
+    high_price = tsd[date]["2. high"]
+    high_prices.append(float(high_price))
 
-
-#Info inputs
-
-
-
+recent_high = max(high_prices)
 
 # app/robo_advisor.py
 
 print("-------------------------")
-print("SELECTED SYMBOL: XYZ")
+print("SELECTED SYMBOL: IBM")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print("REQUEST AT:" )
 print("-------------------------")
 print(f"LATEST DAY:{last_refreshed}")
 print(f"LATEST CLOSE:{to_usd(float(latest_close))}")
+print(f"RECENT HIGH:{to_usd(float(recent_high))}")
 print("RECENT HIGH: $101,000.00")
 print("RECENT LOW: $99,000.00")
 print("-------------------------")
