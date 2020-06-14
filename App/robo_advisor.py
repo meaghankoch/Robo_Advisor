@@ -13,7 +13,9 @@ import csv
 
 
 
-request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=demo"
+api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
+symbol = "IBM" #TO_DO - ASK THE USER FOR THIS! 
+request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={api_key}"
 response = requests.get(request_url)
 #print(type(response)) --> requests.models.Response'
 #print(response.status_code) #--> 200
