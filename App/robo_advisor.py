@@ -45,10 +45,22 @@ parsed_response = json.loads(response.text)
 # print(parsed_response)
 #print(parsed_response["Meta Data"].keys())
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
-print(last_refreshed)
+#print(last_refreshed)
 
-latest_close = parsed_response["Time Series (Daily)"]["2020-06-11"]["4. close"]
-print(latest_close)
+#latest_close = parsed_response["Time Series (Daily)"]["2020-06-11"]["4. close"]
+#print(latest_close)
+
+tsd = parsed_response["Time Series (Daily)"]
+#print(type(tsd.keys())) --> Dict_Keys
+#list(tsd.keys())
+
+date_keys = tsd.keys()
+dates = list(date_keys) # TO DO: assumes first day is on top, but need to ensure latest day is on top
+latest_day = dates[0]
+
+latest_close = tsd[latest_day]["4. close"]
+
+(exit)
 
 
 
