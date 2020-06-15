@@ -4,17 +4,18 @@ import os
 load_dotenv() #> loads contents of the .env file into the script's environment
 
 ALPHAVANTAGE_API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
-print(ALPHAVANTAGE_API_KEY)
+#print(ALPHAVANTAGE_API_KEY)
 
 
 import requests
 import json
 import csv
 
-
+import datetime
+t = datetime.datetime.now()
 
 api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
-symbol = "IBM" #TO_DO - ASK THE USER FOR THIS! 
+symbol = "IBM" 
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={api_key}"
 response = requests.get(request_url)
 #print(type(response)) --> requests.models.Response'
@@ -37,8 +38,13 @@ def to_usd(my_price):
 
 
 
+
+
 #changing data to dict from str
 parsed_response = json.loads(response.text)
+
+
+
 
 #Data Investigation
 #print(type(parsed_response))
@@ -63,6 +69,8 @@ latest_day = dates[0]
 
 latest_close = tsd[latest_day]["4. close"]
 
+usd_latest_close = (float(tsd[latest_day]["4. close"])) #changing latest close to float
+
 #maximum of all high prices
 #recent_high = max(high_prices) 
 
@@ -83,6 +91,30 @@ for date in dates:
 
 recent_low = min(low_prices)
 
+
+
+def recco(): # NOTE: the trailing parentheses are required
+    if usd_latest_close < recent_high:
+        return("BUY!")
+    else:
+        return("DO NOT BUY!")
+
+def reason(): 
+    if recco =="BUY!":
+        return("Because stock is undervalued")
+    else: 
+        return("Because stock is undervalued")
+
+zs = []
+while True: 
+    z = input("Please input the IBM Stock Symbol:")
+    if z == "IBM" or z == "ibm" or z == "iBM":
+        break 
+    elif z > "MSF" or z == "IBMM" :
+        print("Hey, are you sure that stock symbol is correct? Please try again!")
+
+    else:
+         zs.append(z)
 
 
 csv_file_path = "data/prices.csv" # a relative filepath
@@ -110,26 +142,21 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
 
 
 
-
-
-
-
-
 # app/robo_advisor.py
 
 print("-------------------------")
-print("SELECTED SYMBOL: IBM")
+print(f"SELECTED SYMBOL: {symbol}")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-print("REQUEST AT:" )
+print("REQUEST AT:", str((t.strftime("%Y-%m-%d"))), str(t.strftime("%I:%M %p")))
 print("-------------------------")
 print(f"LATEST DAY:{last_refreshed}")
 print(f"LATEST CLOSE:{to_usd(float(latest_close))}")
 print(f"RECENT HIGH:{to_usd(float(recent_high))}")
 print(f"RECENT LOW:{to_usd(float(recent_low))}")
 print("-------------------------")
-print("RECOMMENDATION: BUY!")
-print("RECOMMENDATION REASON: TODO")
+print(f"RECOMMENDATION: {recco()}")
+print(f"RECOMMENDATION REASON:{reason()}")
 print("-------------------------")
 print(f"WRITING DATA TO CSV: {csv_file_path}...")
 print("-------------------------")
