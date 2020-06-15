@@ -110,7 +110,7 @@ while True:
     z = input("Please input the IBM Stock Symbol:")
     if z == "IBM" or z == "ibm" or z == "iBM":
         break 
-    elif z > "MSF" or z == "IBMM" :
+    elif z != "IBM":
         print("Hey, are you sure that stock symbol is correct? Please try again!")
 
     else:
